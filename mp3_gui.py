@@ -1,36 +1,68 @@
 from tkinter import *
+from pygame import mixer
+from tkinter import filedialog
+from PIL import Image, ImageTk
 
-THEME_COLOR = 'BLACK'
+THEME_COLOR = 'WHITE'
 
 
-class Mp3_Ui:
+class Mp3Face:
 
     def __init__(self):
         self.window = Tk()
-        self.window.title('Mp3_player')
-
-        self.window = Tk()
-        self.window.title('Quizzle')
+        self.window.title('Mp3 music player')
         self.window.config(padx=20, pady=20, bg=THEME_COLOR)
+        self.title = Label(text='My music player', bg='white')
+        self.title.grid(row=0, column=3, )
 
-        self.score = Label(text="Score: 0", fg='white', bg=THEME_COLOR)
-        self.score.grid(row=0, column=1)
+        # create menu
+        self.my_menu = Menu(self.window)
+        self.window.config(menu=self.my_menu)
 
-        self.canvas = Canvas(width=300, height=250, bg='white')
-        self.question_text = self.canvas.create_text(
-            150,
-            125,
-            width=280,
-            text='some stuff',
-            fill='black',
-            font=('arial', 20, 'italic'))
-        self.canvas.grid(row=1, column=0, columnspan=2, pady=50)
-        self.true_image = PhotoImage(file='images/true.png')
-        self.true_button = Button(image=self.true_image, highlightthickness=0, command=self.agree)
-        self.true_button.grid(row=2, column=0)
+        #add song to the Menu
+        self.add_music = Menu(self.my_menu)
+        self.my_menu.add_cascade(label='Add Songs', menu=self.add_music)
+        self.add_music.add_command(label='Add song to playist')
 
-        self.false_image = PhotoImage(file='images/false.png')
-        self.false_button = Button(image=self.false_image, highlightthickness=0, command=self.disagree_button)
-        self.false_button.grid(row=2, column=1)
+
+        # black screen
+        self.music_box = Listbox(self.window, bg='black', fg='white', width=60)
+        self.music_box.grid(row=2, column=2, columnspan=3, )
+
+        # button Widget
+        self.button_widget = Frame(self.window)
+        self.button_widget.grid(column=3)
+
+        # Pause button
+        self.pause_image = Image.open('pause_button1.png')
+        self.resize_pause = self.pause_image.resize((25, 25))
+        self.formatted_pause_image = ImageTk.PhotoImage(self.resize_pause)
+        self.pause_button = Button(self.button_widget, image=self.formatted_pause_image)
+        self.pause_button.grid(row=3, column=2, padx=10, pady=10)
+
+        # play button
+        self.play_image = Image.open('play_button.png')
+        self.resize_play = self.play_image.resize((25, 25))
+        self.formatted_play_image = ImageTk.PhotoImage(self.resize_play)
+        self.play_button = Button(self.button_widget, image=self.formatted_play_image)
+        self.play_button.grid(row=3, column=3, padx=10, pady=10)
+
+        # next button
+        self.next_image = Image.open('next_button.png')
+        self.resize_next = self.next_image.resize((25, 25))
+        self.formatted_next_image = ImageTk.PhotoImage(self.resize_next)
+        self.next_button = Button(self.button_widget, image=self.formatted_next_image)
+        self.next_button.grid(row=3, column=4, padx=10, pady=10)
+
+        # back button
+        self.back_image = Image.open('back_button.png')
+        self.resize_back = self.back_image.resize((25, 25))
+        self.formatted_back_image = ImageTk.PhotoImage(self.resize_back)
+        self.back_button = Button(self.button_widget, image=self.formatted_back_image)
+        self.back_button.grid(row=3, column=1, padx=10, pady=10)
 
         self.window.mainloop()
+
+    def add_song(self):
+    # music = self.add_music.add_command(label="add a song to the playlist", command=add)
+     pass
